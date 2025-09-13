@@ -1,0 +1,10 @@
+[Unit]
+Description=Run k8s-worker finalize shortly after install
+
+[Timer]
+OnBootSec=30s
+OnUnitActiveSec=0
+
+[Install]
+WantedBy=multi-user.target
+

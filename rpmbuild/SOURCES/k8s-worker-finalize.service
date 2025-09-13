@@ -1,0 +1,10 @@
+[Unit]
+Description=K8s worker finalize (install containerd/kubelet after rpm txn)
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+Environment=K8S_SERIES=v1.34
+ExecStart=/usr/libexec/k8s-worker/finalize.sh
+
