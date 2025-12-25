@@ -1,0 +1,53 @@
+name: Build RPM
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: almalinux:9
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install build tools
+        run: dnf -y install rpm-build rpmdevtools
+
+      - name: Setup rpmbuild tree
+        run: rpmdev-setuptree
+
+      - name: Copy sources and spec
+        run: |
+          cp -a rpmbuild/SOURCES/* ~/rpmbuild/SOURCES/
+          cp -a rpmbuild/SPECS/* ~/rpmbuild/SPECS/
+
+      - name: Build RPM
+        run: rpmbuild -ba ~/rpmbuild/SPECS/k8s-worker.spec
+
+      - name: Upload RPM artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: k8s-worker-rpm
+          path: ~/rpmbuild/RPMS/noarch/*.rpm
+
+  release:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: k8s-worker-rpm
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: '*.rpm'
+          generate_release_notes: true
