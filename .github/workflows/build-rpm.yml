@@ -73,8 +73,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install createrepo
-        run: dnf -y install createrepo_c
+      - name: Install tools
+        run: dnf -y install createrepo_c git
 
       - name: Download EL9 artifact
         uses: actions/download-artifact@v4
