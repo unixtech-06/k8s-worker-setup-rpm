@@ -56,7 +56,5 @@ systemctl start k8s-worker-finalize.timer >/dev/null 2>&1 || :
 %{_unitdir}/k8s-worker-finalize.timer
 
 %changelog
-* Sat Sep 13 2025 You <you@example.com> - 1.43.2-1
-- Move dnf actions to post-transaction systemd timer
-- Fix kubernetes repo path to v1.xx (no patch number)
-
+* Thu Dec 25 2025 Ryosuke Nakayama <ryosuke_666@icloud.com> 1.43-1
+- Update Kubernetes series to v1.35
