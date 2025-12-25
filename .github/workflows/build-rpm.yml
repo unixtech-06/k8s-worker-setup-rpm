@@ -10,8 +10,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [almalinux:9, almalinux:10]
     container:
-      image: almalinux:9
+      image: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
 
@@ -29,10 +32,16 @@ jobs:
       - name: Build RPM
         run: rpmbuild -ba ~/rpmbuild/SPECS/k8s-worker.spec
 
+      - name: Get OS version
+        id: os_version
+        run: |
+          OS_VERSION=$(rpm -E %{rhel})
+          echo "version=el${OS_VERSION}" >> $GITHUB_OUTPUT
+
       - name: Upload RPM artifact
         uses: actions/upload-artifact@v4
         with:
-          name: k8s-worker-rpm
+          name: k8s-worker-rpm-${{ steps.os_version.outputs.version }}
           path: ~/rpmbuild/RPMS/noarch/*.rpm
 
   release:
@@ -44,7 +53,8 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: k8s-worker-rpm
+          pattern: k8s-worker-rpm-*
+          merge-multiple: true
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
