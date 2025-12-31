@@ -39,14 +39,14 @@ EOT
 
 # ここでは Kubernetes repo だけ置く（バージョンは環境変数で切替可能）
 write_k8s_repo(){
-  local series="${K8S_SERIES:-v1.34}"
+  local release="${K8S_RELEASE:-v1.35}"
   cat >/etc/yum.repos.d/kubernetes.repo <<EOF
 [kubernetes]
 name=Kubernetes
-baseurl=https://pkgs.k8s.io/core:/stable:/${series}/rpm/
+baseurl=https://pkgs.k8s.io/core:/stable:/${release}/rpm/
 enabled=1
 gpgcheck=1
-gpgkey=https://pkgs.k8s.io/core:/stable:/${series}/rpm/repodata/repomd.xml.key
+gpgkey=https://pkgs.k8s.io/core:/stable:/${release}/rpm/repodata/repomd.xml.key
 exclude=kubelet kubeadm kubectl cri-tools kubernetes-cni
 EOF
 }

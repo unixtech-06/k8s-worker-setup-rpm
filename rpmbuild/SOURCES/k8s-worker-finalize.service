@@ -5,6 +5,6 @@ After=network-online.target
 
 [Service]
 Type=oneshot
-Environment=K8S_SERIES=v1.34
+Environment=K8S_RELEASE=v1.35
 ExecStart=/usr/libexec/k8s-worker/finalize.sh
 

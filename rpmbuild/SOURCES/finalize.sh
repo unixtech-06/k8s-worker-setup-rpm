@@ -31,8 +31,8 @@ if ! command -v containerd >/dev/null 2>&1; then
 fi
 
 # Kubernetes ツール
-series="${K8S_SERIES:-v1.35}"
-rpm --import "https://pkgs.k8s.io/core:/stable:/${series}/rpm/repodata/repomd.xml.key" || true
+release="${K8S_RELEASE:-v1.35}"
+rpm --import "https://pkgs.k8s.io/core:/stable:/${release}/rpm/repodata/repomd.xml.key" || true
 dnf -y install kubelet kubeadm kubectl --disableexcludes=kubernetes || true
 systemctl enable --now kubelet || true
 

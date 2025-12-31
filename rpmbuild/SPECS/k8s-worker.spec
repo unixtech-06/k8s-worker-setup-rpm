@@ -57,4 +57,4 @@ systemctl start k8s-worker-finalize.timer >/dev/null 2>&1 || :
 
 %changelog
 * Thu Dec 25 2025 Ryosuke Nakayama <ryosuke_666@icloud.com> 1.43-1
-- Update Kubernetes series to v1.35
+- Update Kubernetes release to v1.35
