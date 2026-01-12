@@ -15,7 +15,7 @@ sudo hostnamectl set-hostname "k8s-worker01" && exec bash
 ```bash
 # リポジトリ追加
 sudo curl -o /etc/yum.repos.d/k8s-worker.repo \
-  https://unixtech-06.github.io/k8s-worker-setup-rpm/k8s-worker.repo
+  https://ryskn.github.io/k8s-worker-setup-rpm/k8s-worker.repo
 
 # インストール
 sudo dnf -y install k8s-worker
