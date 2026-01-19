@@ -1,0 +1,5 @@
+[k8s-worker]
+name=k8s-worker
+baseurl=https://ryskn.github.io/k8s-worker-setup-rpm/el$releasever/
+enabled=1
+gpgcheck=0
